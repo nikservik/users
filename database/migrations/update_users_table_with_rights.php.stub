@@ -16,28 +16,73 @@ class UpdateUsersTableWithRights extends Migration
             // Если нет таблицы пользователей, то создаем таблицу-заготовку
             Schema::create($this->usersTable, function (Blueprint $table) {
                 $table->id();
+                $table->string('email');
 
                 $table->timestamps();
             });
         }
 
-        // TODO добавить проверку фичи в конфиге при создании и удалении столбца
-        // TODO добавить столбец для админского доступа
-        // TODO добавить столбец для когорт
-        if (! Schema::hasColumn($this->usersTable, Config::get('users.rights_attribute'))) {
-            Schema::table($this->usersTable, function (Blueprint $table) {
-                $table->json(Config::get('users.rights_attribute'))->nullable();
-            });
+        if (in_array('create-blessings-attribute', Config::get('users.features'))) {
+            if (! Schema::hasColumn($this->usersTable, Config::get('users.blessings-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->json(Config::get('users.blessings-attribute'))->nullable();
+                });
+            }
         }
+
+        if (in_array('create-admin-role-attribute', Config::get('users.features'))) {
+            if (! Schema::hasColumn($this->usersTable, Config::get('users.admin-role-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->integer(Config::get('users.admin-role-attribute'))->default(1);
+                });
+            }
+        }
+
+        if (in_array('create-cohorts-attribute', Config::get('users.features'))) {
+            if (! Schema::hasColumn($this->usersTable, Config::get('users.cohorts-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->json(Config::get('users.cohorts-attribute'))->nullable();
+                });
+            }
+        }
+
         // TODO добавить назначение владельца
+
+        Schema::create('cohorts', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->json('blessings')->nullable();
+        });
     }
 
     public function down()
     {
-        if (Schema::hasColumn($this->usersTable, Config::get('user-settings.rights_attribute'))) {
-            Schema::table($this->usersTable, function (Blueprint $table) {
-                $table->dropColumn(Config::get('users.rights_attribute'));
-            });
+        if (in_array('create-blessings-attribute', Config::get('users.features'))) {
+            if (Schema::hasColumn($this->usersTable, Config::get('users.blessings-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->dropColumn(Config::get('users.blessings-attribute'));
+                });
+            }
+        }
+
+        if (in_array('create-admin-role-attribute', Config::get('users.features'))) {
+            if (Schema::hasColumn($this->usersTable, Config::get('users.admin-role-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->dropColumn(Config::get('users.admin-role-attribute'));
+                });
+            }
+        }
+
+        if (in_array('create-cohorts-attribute', Config::get('users.features'))) {
+            if (Schema::hasColumn($this->usersTable, Config::get('users.cohorts-attribute'))) {
+                Schema::table($this->usersTable, function (Blueprint $table) {
+                    $table->dropColumn(Config::get('users.cohorts-attribute'));
+                });
+            }
+        }
+
+        if (! Schema::hasTable('cohorts')) {
+            Schema::dropIfExists('cohorts');
         }
     }
 }
