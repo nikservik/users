@@ -2,13 +2,11 @@
 
 namespace Nikservik\Users\Tests\Blessings;
 
-
 use Nikservik\Users\Contracts\BlesserInterface;
 use Nikservik\Users\Tests\TestCase;
 
 class BlessingsTest extends TestCase
 {
-
     public function testBlessedTo()
     {
         $this->assertTrue($this->user->blessedTo('blessing1'));
@@ -22,7 +20,6 @@ class BlessingsTest extends TestCase
         $this->assertTrue($this->user->blessedTo('new1'));
         $this->assertTrue($this->user->blessedTo('new2'));
         $this->assertFalse($this->user->blessedTo('blessing1'));
-
     }
 
     public function testGetBlessers()

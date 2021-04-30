@@ -7,7 +7,6 @@ use Nikservik\Users\Tests\TestCase;
 
 class CohortTest extends TestCase
 {
-
     public function testGetBlessings()
     {
         $cohort = Cohort::make([

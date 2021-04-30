@@ -3,7 +3,6 @@
 namespace Nikservik\Users\Tests;
 
 use Nikservik\Users\Cohorts\Cohort;
-use Nikservik\Users\Tests\TestUser;
 use Nikservik\Users\UsersServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 

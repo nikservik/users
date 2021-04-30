@@ -5,19 +5,22 @@ namespace Nikservik\Users\Blessings;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Config;
 
 class UpdateBlessings implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     public User $user;
 
     protected array $blessings;
+
     /**
      * Create a new job instance.
      *

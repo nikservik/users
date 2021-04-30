@@ -3,15 +3,13 @@
 
 namespace Nikservik\Users\Tests\Cohorts;
 
-
 use Illuminate\Support\Facades\Event;
+use Nikservik\Users\Blessings\UserBlessingsChanged;
 use Nikservik\Users\Cohorts\Cohort;
 use Nikservik\Users\Tests\TestCase;
-use Nikservik\Users\Blessings\UserBlessingsChanged;
 
 class CohortsTest extends TestCase
 {
-
     public function testInCohort()
     {
         $this->assertTrue($this->user->inCohort('testing'));
@@ -78,5 +76,4 @@ class CohortsTest extends TestCase
 
         $this->assertCount(1, $this->user->cohorts);
     }
-
 }

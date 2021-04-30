@@ -3,7 +3,6 @@
 
 namespace Nikservik\Users\Tests\Blessings;
 
-
 use Nikservik\Users\Tests\TestCase;
 use Nikservik\Users\Tests\TestUser;
 
@@ -17,7 +16,6 @@ class BlessedDirectiveTest extends TestCase
             ->assertOk()
             ->assertSee('Nor')
             ->assertDontSee('Blessed');
-
     }
 
     public function test_blessed_with_blessed_user()
@@ -35,7 +33,7 @@ class BlessedDirectiveTest extends TestCase
     {
         $user = TestUser::create([
             'email' => 'test@example.com',
-            'blessings' => '["other"]'
+            'blessings' => '["other"]',
         ]);
         $this
             ->actingAs($user)

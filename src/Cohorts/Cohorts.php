@@ -3,14 +3,12 @@
 
 namespace Nikservik\Users\Cohorts;
 
-
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
 
 trait Cohorts
 {
-
     public function inCohort(string $cohort): bool
     {
         return in_array(
@@ -70,5 +68,4 @@ trait Cohorts
     {
         return [$this->subscription];
     }
-
 }

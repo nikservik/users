@@ -3,7 +3,6 @@
 
 namespace Nikservik\Users\Blessings;
 
-
 class UserBlessingsChangedListener
 {
     public function handle(UserBlessingsChanged $event)

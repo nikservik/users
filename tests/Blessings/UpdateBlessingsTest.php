@@ -2,12 +2,11 @@
 
 namespace Nikservik\Users\Tests;
 
-use Nikservik\Users\Cohorts\Cohort;
 use Nikservik\Users\Blessings\UpdateBlessings;
+use Nikservik\Users\Cohorts\Cohort;
 
 class UpdateBlessingsTest extends TestCase
 {
-
     public function testUpdateBlessingsOnSampleUser()
     {
         (new UpdateBlessings($this->user))->handle();
