@@ -14,6 +14,7 @@ class UsersServiceProvider extends ServiceProvider
     public function boot()
     {
         self::registerListener();
+        self::registerBladeBlessed();
 
         if (! $this->app->runningInConsole()) {
             return;
