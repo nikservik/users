@@ -4,6 +4,7 @@
 namespace Nikservik\Users\Tests;
 
 use Illuminate\Foundation\Auth\User;
+use Nikservik\Users\Admin\AdminRoles;
 use Nikservik\Users\Blessings\Blessings;
 use Nikservik\Users\Cohorts\Cohort;
 use Nikservik\Users\Cohorts\Cohorts;
@@ -19,6 +20,7 @@ class TestUser extends User
 {
     use Blessings;
     use Cohorts;
+    use AdminRoles;
 
     protected static array $blesserContainers = ['cohorts'];
 

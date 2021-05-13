@@ -13,7 +13,7 @@ return [
 
 
     // В каком атрибуте модели User хранятся права доступа
-    'blessings-attribute' =>  'blessings',
+    'blessings-attribute' => 'blessings',
     // В каком атрибуте модели User хранится уровень доступа в админке
     'admin-role-attribute' => 'admin_role',
     // В каком атрибуте модели User хранятся когорты пользователя
