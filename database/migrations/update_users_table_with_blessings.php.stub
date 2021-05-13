@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateUsersTableWithRights extends Migration
+class UpdateUsersTableWithBlessings extends Migration
 {
     protected string $usersTable = 'users';
 
