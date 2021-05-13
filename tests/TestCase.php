@@ -44,7 +44,7 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        include_once __DIR__.'/../database/migrations/update_users_table_with_rights.php.stub';
+        include_once __DIR__.'/../database/migrations/update_users_table_with_blessings.php.stub';
         (new \UpdateUsersTableWithRights)->up();
     }
 
