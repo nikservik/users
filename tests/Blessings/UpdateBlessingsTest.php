@@ -1,9 +1,11 @@
 <?php
 
-namespace Nikservik\Users\Tests;
+namespace Nikservik\Users\Tests\Blessings;
 
 use Nikservik\Users\Blessings\UpdateBlessings;
 use Nikservik\Users\Cohorts\Cohort;
+use Nikservik\Users\Tests\TestCase;
+use Nikservik\Users\Tests\TestUser;
 
 class UpdateBlessingsTest extends TestCase
 {
