@@ -3,7 +3,6 @@
 
 namespace Nikservik\Users\Admin;
 
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 

@@ -2,7 +2,6 @@
 
 namespace Nikservik\Users\Tests\Admin;
 
-use Nikservik\Users\Admin\AdminRoles;
 use Nikservik\Users\Tests\TestCase;
 use Nikservik\Users\Tests\TestUser;
 
