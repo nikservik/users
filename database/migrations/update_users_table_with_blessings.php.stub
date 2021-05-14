@@ -83,7 +83,7 @@ class UpdateUsersTableWithBlessings extends Migration
             }
         }
 
-        if (! Schema::hasTable('cohorts')) {
+        if (Schema::hasTable('cohorts')) {
             Schema::dropIfExists('cohorts');
         }
     }

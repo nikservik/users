@@ -45,7 +45,7 @@ class TestCase extends Orchestra
         ]);
 
         include_once __DIR__.'/../database/migrations/update_users_table_with_blessings.php.stub';
-        (new \UpdateUsersTableWithRights)->up();
+        (new \UpdateUsersTableWithBlessings)->up();
     }
 
     protected function defineRoutes($router)
