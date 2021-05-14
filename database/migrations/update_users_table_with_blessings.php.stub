@@ -43,11 +43,13 @@ class UpdateUsersTableWithBlessings extends Migration
             }
         });
 
-        Schema::create('cohorts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->json('blessings')->nullable();
-        });
+        if (! Schema::hasTable('cohorts')) {
+            Schema::create('cohorts', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->json('blessings')->nullable();
+            });
+        }
 
         if (in_array('create-admin-role-attribute', Config::get('users.features'))
             && $owner = Config::get('users.owner')) {
