@@ -16,16 +16,22 @@ class AdminRolesTest extends TestCase
         parent::setUp();
 
         $this->editor = TestUser::create([
+            'name' => 'bob',
+            'password' => 'password',
             'email' => 'editor@example.com',
             'admin_role' => 2,
         ]);
 
         $this->admin = TestUser::create([
+            'name' => 'bob',
+            'password' => 'password',
             'email' => 'admin@example.com',
             'admin_role' => 3,
         ]);
 
         $this->superadmin = TestUser::create([
+            'name' => 'bob',
+            'password' => 'password',
             'email' => 'superadmin@example.com',
             'admin_role' => 4,
         ]);

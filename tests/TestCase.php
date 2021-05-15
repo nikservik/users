@@ -24,6 +24,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->user = TestUser::create([
+            'name' => 'bob',
+            'password' => 'password',
             'email' => 'test@example.com',
             'blessings' => '["blessing1","blessing2"]',
             'cohorts' => '["testing"]',
@@ -37,15 +39,13 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
+        $app['config']->set('database.default', 'mysql');
+    }
 
-        include_once __DIR__.'/../database/migrations/update_users_table_with_blessings.php.stub';
-        (new \UpdateUsersTableWithBlessings)->up();
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 
     protected function defineRoutes($router)

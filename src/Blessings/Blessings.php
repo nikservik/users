@@ -21,13 +21,13 @@ trait Blessings
     {
         return in_array(
             $blessing,
-            json_decode($this->attributes[Config::get('users.blessings-attribute')])
+            json_decode($this->attributes['blessings'])
         );
     }
 
     public function setBlessings(array $blessings): self
     {
-        $this->attributes[Config::get('users.blessings-attribute')] = json_encode($blessings);
+        $this->attributes['blessings'] = json_encode($blessings);
 
         return $this;
     }

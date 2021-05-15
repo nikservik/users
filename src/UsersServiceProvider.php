@@ -4,6 +4,7 @@ namespace Nikservik\Users;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
@@ -23,12 +24,9 @@ class UsersServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/users.php' => config_path('users.php'),
         ], 'users-config');
-
-        if (! class_exists('UpdateUsersTableWithRights')) {
-            $this->publishes([
-                __DIR__.'/../database/migrations/update_users_table_with_blessings.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_update_users_table_with_blessings.php'),
-            ], 'users-migration');
-        }
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
+        ], 'users-migrations');
     }
 
     public function register()
@@ -38,16 +36,20 @@ class UsersServiceProvider extends ServiceProvider
 
     public static function registerListener()
     {
-        Event::listen(
-            UserBlessingsChanged::class,
-            UserBlessingsChangedListener::class
-        );
+        if (in_array('register-event-listener', Config::get('users.features'))) {
+            Event::listen(
+                UserBlessingsChanged::class,
+                UserBlessingsChangedListener::class
+            );
+        }
     }
 
     public static function registerBladeBlessed()
     {
-        Blade::if('blessed', function ($blessing) {
-            return Auth::check() && Auth::user()->blessedTo($blessing);
-        });
+        if (in_array('register-blade-directives', Config::get('users.features'))) {
+            Blade::if('blessed', function ($blessing) {
+                return Auth::check() && Auth::user()->blessedTo($blessing);
+            });
+        }
     }
 }

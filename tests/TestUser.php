@@ -26,5 +26,5 @@ class TestUser extends User
 
     protected $table = 'users';
 
-    protected $fillable = ['email', 'blessings', 'cohorts', 'admin_role'];
+    protected $fillable = ['name', 'password', 'email', 'blessings', 'cohorts', 'admin_role'];
 }

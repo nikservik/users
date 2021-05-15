@@ -19,16 +19,18 @@ class UpdateBlessingsTest extends TestCase
 
     public function testMixedBlessings()
     {
-        $cohortNew1 = Cohort::create([
+        Cohort::create([
             'name' => 'new1',
             'blessings' => ["bnew1", "bnew2"],
         ]);
-        $cohortNew2 = Cohort::create([
+        Cohort::create([
             'name' => 'new2',
             'blessings' => ["bnew2", "bnew3"],
         ]);
         $user = TestUser::create([
-            'email' => 'test@example.com',
+            'name' => 'bob',
+            'password' => 'password',
+            'email' => 'test2@example.com',
             'cohorts' => '["new1","new2"]',
         ]);
 

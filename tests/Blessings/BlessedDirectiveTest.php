@@ -32,7 +32,9 @@ class BlessedDirectiveTest extends TestCase
     public function test_blessed_with_not_blessed_user()
     {
         $user = TestUser::create([
-            'email' => 'test@example.com',
+            'name' => 'bob',
+            'password' => 'password',
+            'email' => 'test1@example.com',
             'blessings' => '["other"]',
         ]);
         $this

@@ -25,6 +25,6 @@ trait AdminRoles
 
     public function getAdminRoleAttribute(): int
     {
-        return Arr::get($this->attributes, Config::get('users.admin-role-attribute'), 1);
+        return Arr::get($this->attributes, 'admin_role', 1);
     }
 }

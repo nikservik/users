@@ -13,18 +13,18 @@ trait Cohorts
     {
         return in_array(
             $cohort,
-            json_decode($this->attributes[Config::get('users.cohorts-attribute')])
+            json_decode($this->attributes['cohorts'])
         );
     }
 
     public function addToCohort(string $cohort): self
     {
-        $cohorts = json_decode($this->attributes[Config::get('users.cohorts-attribute')]);
+        $cohorts = json_decode($this->attributes['cohorts']);
 
         if (! in_array($cohort, $cohorts)) {
             $cohorts[] = $cohort;
 
-            $this->attributes[Config::get('users.cohorts-attribute')] = json_encode($cohorts);
+            $this->attributes['cohorts'] = json_encode($cohorts);
 
             UserBlessingsChanged::dispatch($this);
         }
@@ -34,12 +34,12 @@ trait Cohorts
 
     public function removeFromCohort(string $cohort): self
     {
-        $cohorts = json_decode($this->attributes[Config::get('users.cohorts-attribute')]);
+        $cohorts = json_decode($this->attributes['cohorts']);
 
         if (in_array($cohort, $cohorts)) {
             unset($cohorts[array_search($cohort, $cohorts)]);
 
-            $this->attributes[Config::get('users.cohorts-attribute')] = json_encode($cohorts);
+            $this->attributes['cohorts'] = json_encode($cohorts);
 
             UserBlessingsChanged::dispatch($this);
         }
@@ -54,7 +54,7 @@ trait Cohorts
     public function getCohortsAttribute()
     {
         return Cohort::
-            whereIn('name', json_decode($this->attributes[Config::get('users.cohorts-attribute')]))
+            whereIn('name', json_decode($this->attributes['cohorts']))
             ->get();
     }
 
