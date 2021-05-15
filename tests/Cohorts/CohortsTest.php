@@ -64,7 +64,6 @@ class CohortsTest extends TestCase
 
     public function testGetCohortsAttribute()
     {
-        ray($this->user->cohorts);
         $this->assertCount(1, $this->user->cohorts);
         $this->assertInstanceOf(Cohort::class, $this->user->cohorts[0]);
         $this->assertEquals('testing', $this->user->cohorts[0]->name);
