@@ -3,7 +3,7 @@
 
 namespace Nikservik\Users\Blessings;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Builder;
 use Nikservik\Users\Contracts\BlesserInterface;
 
 /**
@@ -45,6 +45,20 @@ trait Blessings
         }
 
         return $blessers;
+    }
+
+    public function scopeWhereBlessedTo(Builder $query, string $blessing = '', $boolean = 'and'): Builder
+    {
+        $method = $boolean == 'and' ? 'where' : 'orWhere';
+
+        return $query->$method(function ($query) use ($blessing) {
+            $query->whereJsonContains('blessings', $blessing);
+        });
+    }
+
+    public function scopeOrWhereBlessedTo(Builder $query, string $blessing = ''): Builder
+    {
+        return $this->scopeWhereBlessedTo($query, $blessing, 'or');
     }
 
     protected function getBlesserContainers(): array

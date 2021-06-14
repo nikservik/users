@@ -5,14 +5,12 @@
 ## Установка
 
 Добавить в `composer.json`
-```bash
+```json
+{
     "require": {
-        ...
-        "nikservik/users": "^1.0",
-        ...
+        "nikservik/users": "^1.0"
     },
     "config": {
-        ...
         "github-oauth": {
             "github.com": "токен доступа (создается в настройках)"
         }
@@ -23,6 +21,7 @@
             "url" : "git@github.com:nikservik/users"
         }
     ]
+}
 ```
 После этого выполнить 
 ```bash
@@ -90,7 +89,7 @@ class Subscription implements BlesserInterface
         if ($this->active) {
             return ['use-predictions', 'see-dashas'];
         } else {
-            return [''];
+            return [];
         }
     }
 }
@@ -108,13 +107,6 @@ class User extends Auth
     {
         return $this->hasMany(Subscription::class);
     }
-    
-    // аксессор для списка активных подписок
-    // вызывается при обращении $user->subscriptions
-    public function getSubscriptionsAttribute(): array
-    {
-        return [$this->subscriptions()->where('status', 'active')->get()];
-    }
 }
 ```
 В `blesserContainers` может быть несколько атрибутов. При обновлении благословений, все они будут обработаны.
@@ -123,7 +115,7 @@ class User extends Auth
 
 При изменении состояния класс-благословитель должен создавать событие `UserBlessingsChanged`.
 ```php
-class Subscription
+class Subscription implements BlesserInterface
 {
     protected bool $active = true;
     
@@ -159,6 +151,8 @@ phpunit
 ```
 
 ## История изменений
+### 1.02
+- добавлены методы whereBlessedTo и orWhereBlessedTo
 
 ### 1.01
 - добавлен трейт AdminRoles
