@@ -109,6 +109,24 @@ class User extends Auth
     }
 }
 ```
+Если у пользователя может быть только одна активная подписка, то можно использовать
+специальный трейт `SingleSubscriptionBlessings`. 
+Он добавляет аксессор для атрибута `singleSubscription`.
+Этот атрибут нужно добавить в список благословителей `$blesserContainers`.
+```php
+class User extends Auth
+{
+    use SingleSubscriptionBlessings;
+    
+    protected static array $blesserContainers = ['singleSubscription'];
+    
+    // подписка пользователя
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
+    }
+}
+```
 В `blesserContainers` может быть несколько атрибутов. При обновлении благословений, все они будут обработаны.
 Если нужно динамически создавать список источников благословений, 
 то можно переопределить метод `getBlesserContainers`.
