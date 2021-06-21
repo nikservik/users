@@ -10,11 +10,6 @@
     "require": {
         "nikservik/users": "^1.0"
     },
-    "config": {
-        "github-oauth": {
-            "github.com": "токен доступа (создается в настройках)"
-        }
-    },
     "repositories" : [
         {
             "type": "vcs",
@@ -50,7 +45,7 @@ php artisan migrate
 ## Использование
 
 ### Авторизация действий пользователя
-Нужно добавить трейты `Blessings` в модель User.
+Нужно добавить трейт `Blessings` в модель User.
 ```php
 class User extends Auth
 {
