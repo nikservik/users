@@ -4,11 +4,16 @@
 namespace Nikservik\Users\Cohorts;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Query\Builder;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
 
 trait Cohorts
 {
+    /**
+     * Проверяет, находится ли пользователь в заданной когорте
+     * @param string $cohort
+     * @return bool
+     */
     public function inCohort(string $cohort): bool
     {
         return in_array(
@@ -17,6 +22,12 @@ trait Cohorts
         );
     }
 
+    /**
+     * Добавляет пользователя в заданную когорту.
+     * Инициирует событие UserBlessingsChanged.
+     * @param string $cohort
+     * @return $this
+     */
     public function addToCohort(string $cohort): self
     {
         $cohorts = json_decode($this->attributes['cohorts']);
@@ -32,6 +43,12 @@ trait Cohorts
         return $this;
     }
 
+    /**
+     * Удаляет пользователя из заданной когорты.
+     * Инициирует событие UserBlessingsChanged.
+     * @param string $cohort
+     * @return $this
+     */
     public function removeFromCohort(string $cohort): self
     {
         $cohorts = json_decode($this->attributes['cohorts']);
@@ -53,8 +70,16 @@ trait Cohorts
      */
     public function getCohortsAttribute()
     {
+        return $this->cohorts()->get();
+    }
+
+    /**
+     * Возвращает Builder со списком когорт пользователя
+     * @return mixed
+     */
+    public function cohorts()
+    {
         return Cohort::
-            whereIn('name', json_decode($this->attributes['cohorts']))
-            ->get();
+            whereIn('name', json_decode($this->attributes['cohorts']));
     }
 }

@@ -14,7 +14,7 @@ use Nikservik\Users\Cohorts\Cohorts;
  * @property string $email
  * @property string $blessings
  * @property-read array<Cohort> $cohorts
- * @property int $admin_role
+ * @property int $adminRole
  */
 class TestUser extends User
 {

@@ -21,6 +21,10 @@ class Cohort extends Model implements BlesserInterface
 
     public $timestamps = false;
 
+    /**
+     * Реализует интерфейс BlesserInterface
+     * @return array
+     */
     public function getBlessings(): array
     {
         return $this->blessings;

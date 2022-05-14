@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Событие изменения благословений у пользователя.
+ * Вызывается, когда, например, у пользователя меняется статус подписки.
+ */
 class UserBlessingsChanged
 {
     use Dispatchable;

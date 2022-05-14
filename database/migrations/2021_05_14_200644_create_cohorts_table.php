@@ -11,7 +11,7 @@ class CreateCohortsTable extends Migration
         Schema::create('cohorts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('blessings')->nullable();
+            $table->text('blessings')->nullable();
         });
     }
 

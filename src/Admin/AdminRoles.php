@@ -6,6 +6,10 @@ namespace Nikservik\Users\Admin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 
+/**
+ * @property-read int $adminRole
+ * @property int $admin_role
+ */
 trait AdminRoles
 {
     public function hasEditorRole(): bool

@@ -10,6 +10,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Класс задачи для очереди исполнения.
+ * Обновляет благословения пользователя, собирая их у благословителей.
+ */
 class UpdateBlessings implements ShouldQueue
 {
     use Dispatchable;
