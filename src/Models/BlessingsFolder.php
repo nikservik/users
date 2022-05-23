@@ -13,6 +13,6 @@ class BlessingsFolder extends Model
 
     public function blessings(): HasMany
     {
-        return $this->hasMany(Blessing::class);
+        return $this->hasMany(Blessing::class, 'folder_id');
     }
 }
