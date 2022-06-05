@@ -12,6 +12,7 @@ class CreateBlessingsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->integer('position');
             $table->text('description')->nullable();
             $table->foreignId('folder_id')->constrained('blessings_folders');
         });

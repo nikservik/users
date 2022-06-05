@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BlessingsFolder extends Model
 {
-    protected $fillable = ['slug', 'name'];
+    protected $fillable = ['slug', 'name', 'position',];
 
     public $timestamps = false;
 

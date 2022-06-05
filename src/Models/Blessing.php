@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Blessing extends Model
 {
-    protected $fillable = ['slug', 'name', 'description'];
+    protected $fillable = ['slug', 'name', 'description', 'position',];
 
     public $timestamps = false;
 
