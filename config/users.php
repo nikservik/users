@@ -9,6 +9,7 @@ return [
         'create-cohorts-attribute',
         'register-event-listener',
         'register-blade-directives',
+        'register-middleware',
     ],
 
     // Емейл пользователя, которому будет присвоен максимальный доступ в админке

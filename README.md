@@ -154,6 +154,26 @@ class Subscription implements BlesserInterface
 }
 ```
 
+### Middleware для проверки прав
+
+#### Проверка благословений
+Для проверки благословений в роуте используется `UserBlessedTo` или сокращение `blessed`.
+```php
+    \Illuminate\Support\Facades\Route::get('/some/path', SomeAction::class)
+        ->middleware("blessed:required-blessing");
+```
+Если у пользователя нет `required-blessing`, то роутер вернет редирект на 403.
+
+#### Проверка прав администратора
+Чтобы проверить уровень прав администратора используется `HasAdminRole` или сокращение `admin`.
+```php
+    \Illuminate\Support\Facades\Route::get('/some/admin/path', SomeAction::class)
+        ->middleware("admin:editor");
+```
+Можно указывать минимальную роль словом: `editor`, `admin`, `superadmin`.
+Или числом: 2, 3, 4.
+1 - это уровень обычного пользователя.
+
 ### Когорты
 Когорты – это инструмент для тестирования гипотез.
 Они тоже реализуют интерфейс `BlesserInterface`.

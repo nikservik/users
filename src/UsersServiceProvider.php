@@ -2,13 +2,17 @@
 
 namespace Nikservik\Users;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Nikservik\Commons\Has;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
 use Nikservik\Users\Blessings\UserBlessingsChangedListener;
+use Nikservik\Users\Middleware\HasAdminRole;
+use Nikservik\Users\Middleware\UserBlessedTo;
 
 class UsersServiceProvider extends ServiceProvider
 {
@@ -16,6 +20,7 @@ class UsersServiceProvider extends ServiceProvider
     {
         self::registerListener();
         self::registerBladeBlessed();
+        $this->registerMiddleware();
 
         if (! $this->app->runningInConsole()) {
             return;
@@ -36,7 +41,7 @@ class UsersServiceProvider extends ServiceProvider
 
     public static function registerListener()
     {
-        if (in_array('register-event-listener', Config::get('users.features'))) {
+        if (Has::feature('users', 'register-event-listener')) {
             Event::listen(
                 UserBlessingsChanged::class,
                 UserBlessingsChangedListener::class
@@ -46,10 +51,19 @@ class UsersServiceProvider extends ServiceProvider
 
     public static function registerBladeBlessed()
     {
-        if (in_array('register-blade-directives', Config::get('users.features'))) {
+        if (Has::feature('users', 'register-blade-directives')) {
             Blade::if('blessed', function ($blessing) {
                 return Auth::check() && Auth::user()->blessedTo($blessing);
             });
+        }
+    }
+
+    protected function registerMiddleware()
+    {
+        if (Has::feature('users', 'register-middleware')) {
+            $router = $this->app->make(Router::class);
+            $router->aliasMiddleware('blessed', UserBlessedTo::class);
+            $router->aliasMiddleware('admin', HasAdminRole::class);
         }
     }
 }
