@@ -13,6 +13,6 @@ class BlessingsFolder extends Model
 
     public function blessings(): HasMany
     {
-        return $this->hasMany(Blessing::class, 'folder_id');
+        return $this->hasMany(Blessing::class, 'folder_id')->orderBy('position');
     }
 }
