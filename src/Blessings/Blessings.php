@@ -30,7 +30,7 @@ trait Blessings
     {
         return in_array(
             $blessing,
-            json_decode($this->attributes['blessings'])
+            json_decode($this->getBlessings())
         );
     }
 
@@ -108,16 +108,16 @@ trait Blessings
         return [];
     }
 
-    protected static function booted()
+    public function getBlessings()
     {
-        static::creating(function ($user) {
-            if ($user->blessings === null) {
-                if (Has::feature('users', 'load-default-blessings')) {
-                    $user->blessings = json_encode(Config::get('users.default-blessings'));
-                } else {
-                    $user->blessings = '[]';
-                }
-            }
-        });
+        if ($this->blessings !== null) {
+            return $this->blessings;
+        }
+
+        if (Has::feature('users', 'load-default-blessings')) {
+            return json_encode(Config::get('users.default-blessings'));
+        }
+
+        return '[]';
     }
 }

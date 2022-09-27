@@ -35,7 +35,7 @@ class DefaultBlessingsTest extends TestCase
      * Чтобы этот тест проходил, нужно в конфиге выключить фичу загрузки благословений по умолчанию
      * @return void
      */
-    public function __test_does_not_load_default_blessings_when_feature_off()
+    public function test_does_not_load_default_blessings_when_feature_off()
     {
         Config::set('users.features', ['create-blessings-attribute', 'create-admin-role-attribute', 'create-cohorts-attribute',]);
 
