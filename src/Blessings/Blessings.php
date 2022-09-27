@@ -4,6 +4,8 @@
 namespace Nikservik\Users\Blessings;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Config;
+use Nikservik\Commons\Has;
 use Nikservik\Users\Contracts\BlesserInterface;
 
 /**
@@ -104,5 +106,18 @@ trait Blessings
         }
 
         return [];
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if ($user->blessings === null) {
+                if (Has::feature('users', 'load-default-blessings')) {
+                    $user->blessings = json_encode(Config::get('users.default-blessings'));
+                } else {
+                    $user->blessings = '[]';
+                }
+            }
+        });
     }
 }
