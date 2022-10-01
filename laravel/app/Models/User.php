@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Auth;
 use Nikservik\Users\Admin\AdminRoles;
 use Nikservik\Users\Blessings\Blessings;
+use Nikservik\Users\Cohorts\Cohorts;
 
 class User extends Auth
 {
     use HasFactory;
     use AdminRoles;
     use Blessings;
+    use Cohorts;
 
     protected $fillable = [
         'name',

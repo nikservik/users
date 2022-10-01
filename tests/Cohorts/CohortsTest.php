@@ -12,8 +12,8 @@ class CohortsTest extends TestCase
 {
     public function testInCohort()
     {
-        $this->assertTrue($this->user->inCohort('testing'));
-        $this->assertFalse($this->user->inCohort('unexistant'));
+        $this->assertTrue($this->user->inCohort('test'));
+        $this->assertFalse($this->user->inCohort('non-existent'));
     }
 
     public function testAddToCohort()
@@ -34,22 +34,22 @@ class CohortsTest extends TestCase
     public function testAddToAlreadyAddedCohortEventNotFired()
     {
         Event::fake();
-        $this->user->addToCohort('testing');
+        $this->user->addToCohort('test');
 
         Event::assertNotDispatched(UserBlessingsChanged::class);
     }
 
     public function testRemoveFromCohort()
     {
-        $this->user->removeFromCohort('testing');
+        $this->user->removeFromCohort('test');
 
-        $this->assertFalse($this->user->inCohort('testing'));
+        $this->assertFalse($this->user->inCohort('test'));
     }
 
     public function testRemoveFromCohortEventFired()
     {
         Event::fake();
-        $this->user->removeFromCohort('testing');
+        $this->user->removeFromCohort('test');
 
         Event::assertDispatched(UserBlessingsChanged::class);
     }
@@ -66,13 +66,6 @@ class CohortsTest extends TestCase
     {
         $this->assertCount(1, $this->user->cohorts);
         $this->assertInstanceOf(Cohort::class, $this->user->cohorts[0]);
-        $this->assertEquals('testing', $this->user->cohorts[0]->name);
-    }
-
-    public function testGetCohortsAttributeDontGetMore()
-    {
-        Cohort::create(['name' => 'onemore']);
-
-        $this->assertCount(1, $this->user->cohorts);
+        $this->assertEquals('test', $this->user->cohorts[0]->getName());
     }
 }

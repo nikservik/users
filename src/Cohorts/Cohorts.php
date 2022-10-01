@@ -3,12 +3,13 @@
 
 namespace Nikservik\Users\Cohorts;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Config;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
 
 trait Cohorts
 {
+    protected array $initiatedCohorts;
+
     /**
      * Проверяет, находится ли пользователь в заданной когорте
      * @param string $cohort
@@ -66,20 +67,39 @@ trait Cohorts
 
     /**
      * Аксессор для атрибута cohorts
-     * @return Collection
+     * @return array<Cohort>
      */
     public function getCohortsAttribute()
     {
-        return $this->cohorts()->get();
+        return $this->cohorts();
     }
 
     /**
-     * Возвращает Builder со списком когорт пользователя
-     * @return mixed
+     * Возвращает инициализированные когорты пользователя.
+     * Здесь используется только базовый класс Cohort,
+     * потому что от него нужен только список благословений.
+     * @return array<Cohort>
+     * @throw BadCohortNameException
+     * @throw NonExistentCohortClassException
      */
-    public function cohorts()
+    public function cohorts(): array
     {
-        return Cohort::
-            whereIn('name', json_decode($this->attributes['cohorts']));
+        if (isset($this->initiatedCohorts)) {
+            return $this->initiatedCohorts;
+        }
+
+        if ($this->attributes['cohorts'] === null) {
+            return [];
+        }
+
+        $this->initiatedCohorts = [];
+
+        foreach (json_decode($this->attributes['cohorts'], true) as $cohort) {
+            if ($cohortData = Config::get('cohorts.'.$cohort)) {
+                $this->initiatedCohorts[] = new Cohort($cohort, $cohortData['blessings']);
+            }
+        }
+
+        return $this->initiatedCohorts;
     }
 }

@@ -28,13 +28,10 @@ class TestCase extends Orchestra
             'password' => 'password',
             'email' => 'test@example.com',
             'blessings' => '["blessing1","blessing2"]',
-            'cohorts' => '["testing"]',
+            'cohorts' => '["test"]',
         ]);
 
-        $this->cohort = Cohort::create([
-            'name' => 'testing',
-            'blessings' => ["blessing1"],
-        ]);
+        $this->cohort = Cohort::make('test');
     }
 
     public function getEnvironmentSetUp($app)

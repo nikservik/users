@@ -27,6 +27,7 @@ class UsersServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
+            __DIR__ . '/../config/cohorts.php' => config_path('cohorts.php'),
             __DIR__ . '/../config/users.php' => config_path('users.php'),
         ], 'users-config');
         $this->publishes([
@@ -37,6 +38,7 @@ class UsersServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/users.php', 'users');
+        $this->mergeConfigFrom(__DIR__ . '/../config/cohorts.php', 'cohorts');
     }
 
     public static function registerListener()
