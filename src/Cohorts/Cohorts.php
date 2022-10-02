@@ -17,10 +17,12 @@ trait Cohorts
      */
     public function inCohort(string $cohort): bool
     {
-        return in_array(
-            $cohort,
-            json_decode($this->attributes['cohorts'])
-        );
+        return isset($this->attributes['cohorts'])
+            && $this->attributes['cohorts'] !== null
+            && in_array(
+                $cohort,
+                json_decode($this->attributes['cohorts'])
+            );
     }
 
     /**

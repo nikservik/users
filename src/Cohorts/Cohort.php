@@ -98,7 +98,12 @@ class Cohort implements BlesserInterface
     public function addQualifyingUsers(): void
     {
         User::where(function ($query) {$this->scope($query);})
-            ->update(['cohorts' => DB::raw("JSON_ARRAY_APPEND(cohorts, '$', '".$this->name."')")]);
+            ->whereNotNull('cohorts')
+            ->update(['cohorts' => DB::raw("JSON_ARRAY_APPEND(`cohorts`, '$', '".$this->name."')")]);
+
+        User::where(function ($query) {$this->scope($query);})
+            ->whereNull('cohorts')
+            ->update(['cohorts' => DB::raw("JSON_ARRAY('".$this->name."')")]);
 
         $this->updateBlessingsForUsers();
     }
@@ -117,8 +122,13 @@ class Cohort implements BlesserInterface
     {
         foreach ($this->blessings as $blessing) {
             User::whereJsonContains('cohorts', $this->name)
+                ->whereNotNull('blessings')
                 ->whereJsonDoesntContain('blessings', $blessing)
                 ->update(['blessings' => DB::raw("JSON_ARRAY_APPEND(blessings, '$', '".$blessing."')")]);
+
+            User::whereJsonContains('cohorts', $this->name)
+                ->whereNull('blessings')
+                ->update(['blessings' => DB::raw("JSON_ARRAY('".$blessing."')")]);
         }
     }
 }

@@ -10,7 +10,7 @@ use Nikservik\Users\Tests\TestCase;
 
 class CohortTest extends TestCase
 {
-    public function test_loads_name_and_blessings()
+    public function test_make_loads_name_and_blessings()
     {
         $cohort = Cohort::make('test');
 
@@ -19,13 +19,13 @@ class CohortTest extends TestCase
         $this->assertEquals(['blessing1'], $cohort->getBlessings());
     }
 
-    public function test_returns_null_for_nonexistent()
+    public function test_make_returns_null_for_nonexistent()
     {
         $this->expectException(BadCohortNameException::class);
         Cohort::make('nonexistent');
     }
 
-    public function test_returns_null_for_bad_class_in_config()
+    public function test_make_returns_null_for_bad_class_in_config()
     {
         $this->expectException(NonExistentCohortClassException::class);
         Cohort::make('bad-class');
@@ -44,7 +44,7 @@ class CohortTest extends TestCase
         $this->assertEquals(3, $cohort->getUsersCount());
     }
 
-    public function test_count_qualifying_users()
+    public function test_counts_qualifying_users()
     {
         // Один пользователь с когортой 'test' создается в setup
         // Пользователи, которые подходят для когорты
@@ -72,6 +72,19 @@ class CohortTest extends TestCase
         $this->assertEquals(6, $cohort->getUsersCount());
     }
 
+    public function test_adds_qualifying_users_by_role()
+    {
+        // Пользователи, которые должны попасть в когорту
+        User::factory()->count(3)->create(['admin_role' => 4]);
+        // Пользователи, которые не должны попасть в когорту
+        User::factory()->count(3)->create(['admin_role' => 1]);
+
+        $cohort = Cohort::make('test-by-role');
+        $cohort->addQualifyingUsers();
+
+        $this->assertEquals(3, $cohort->getUsersCount());
+    }
+
     public function test_doesnt_add_not_qualified_user()
     {
         $user = User::factory()->create(['cohorts' => '["not-qualified"]']);
@@ -79,6 +92,15 @@ class CohortTest extends TestCase
         Cohort::make('test')->addQualifyingUsers();
 
         $this->assertFalse($user->refresh()->inCohort('test'));
+    }
+
+    public function test_doesnt_add_not_qualified_user_by_role()
+    {
+        $user = User::factory()->create(['admin_role' => 1]);
+
+        Cohort::make('test-by-role')->addQualifyingUsers();
+
+        $this->assertFalse($user->refresh()->inCohort('test-by-role'));
     }
 
     public function test_updates_blessings_for_users_in_cohort()
@@ -121,5 +143,15 @@ class CohortTest extends TestCase
 
         $this->assertTrue($user->blessedTo('blessing1'));
         $this->assertCount(1, json_decode($user->blessings, true));
+    }
+
+    public function test_updates_blessings_for_users_in_cohort_with_empty_blessings()
+    {
+        $user = User::factory()->create(['admin_role' => 4]);
+
+        Cohort::make('test-by-role')->addQualifyingUsers();
+        $user->refresh();
+
+        $this->assertTrue($user->blessedTo('blessing2'));
     }
 }

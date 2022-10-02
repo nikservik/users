@@ -4,7 +4,7 @@ namespace Nikservik\Users\Tests;
 
 use Nikservik\Users\Cohorts\Cohort;
 
-class TestCohort extends Cohort
+class TestCohortByCohort extends Cohort
 {
     /**
      * В тестовый скоуп попадают пользователи, которые состоят в когорте to-add

@@ -3,6 +3,7 @@
 
 namespace Nikservik\Users\Tests\Cohorts;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Event;
 use Nikservik\Users\Blessings\UserBlessingsChanged;
 use Nikservik\Users\Cohorts\Cohort;
@@ -14,6 +15,13 @@ class CohortsTest extends TestCase
     {
         $this->assertTrue($this->user->inCohort('test'));
         $this->assertFalse($this->user->inCohort('non-existent'));
+    }
+
+    public function test_in_cohort_with_empty_cohorts()
+    {
+        $user = User::factory()->create();
+
+        $this->assertFalse($user->inCohort('test'));
     }
 
     public function testAddToCohort()
