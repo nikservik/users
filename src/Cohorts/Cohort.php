@@ -99,6 +99,7 @@ class Cohort implements BlesserInterface
     {
         User::where(function ($query) {$this->scope($query);})
             ->whereNotNull('cohorts')
+            ->whereJsonDoesntContain('cohorts', $this->name)
             ->update(['cohorts' => DB::raw("JSON_ARRAY_APPEND(`cohorts`, '$', '".$this->name."')")]);
 
         User::where(function ($query) {$this->scope($query);})

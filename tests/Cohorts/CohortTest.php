@@ -85,6 +85,18 @@ class CohortTest extends TestCase
         $this->assertEquals(3, $cohort->getUsersCount());
     }
 
+    public function test_adds_qualifying_users_by_role_doesnt_duplicate_cohort()
+    {
+        $user = User::factory()->create(['admin_role' => 4]);
+
+        $cohort = Cohort::make('test-by-role');
+        $cohort->addQualifyingUsers();
+        $cohort->addQualifyingUsers();
+
+        $this->assertTrue($user->refresh()->inCohort('test-by-role'));
+        $this->assertCount(1, $user->cohorts);
+    }
+
     public function test_doesnt_add_not_qualified_user()
     {
         $user = User::factory()->create(['cohorts' => '["not-qualified"]']);
