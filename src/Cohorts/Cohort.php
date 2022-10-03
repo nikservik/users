@@ -114,7 +114,7 @@ class Cohort implements BlesserInterface
      * @param Builder $query
      * @return void
      */
-    protected function scope($query): void
+    public function scope($query): void
     {
         // $query->where(...);
     }
