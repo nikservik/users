@@ -33,7 +33,7 @@ trait Cohorts
      */
     public function addToCohort(string $cohort): self
     {
-        $cohorts = json_decode($this->attributes['cohorts']);
+        $cohorts = json_decode($this->attributes['cohorts'] ?? '[]');
 
         if (! in_array($cohort, $cohorts)) {
             $cohorts[] = $cohort;

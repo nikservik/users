@@ -19,7 +19,7 @@ class CohortsTest extends TestCase
 
     public function test_in_cohort_with_empty_cohorts()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create()->refresh();
 
         $this->assertFalse($user->inCohort('test'));
     }
@@ -29,6 +29,15 @@ class CohortsTest extends TestCase
         $this->user->addToCohort('new');
 
         $this->assertTrue($this->user->inCohort('new'));
+    }
+
+    public function test_add_to_cohort_with_empty_cohorts()
+    {
+        $user = User::factory()->create();
+
+        $user->addToCohort('new');
+
+        $this->assertTrue($user->inCohort('new'));
     }
 
     public function testAddToCohortEventFired()

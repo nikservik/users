@@ -11,7 +11,7 @@ class TestCohortByCohort extends Cohort
      * @param $query
      * @return void
      */
-    protected function scope($query): void
+    public function scope($query): void
     {
         $query->whereJsonContains('cohorts', 'to-add');
     }
