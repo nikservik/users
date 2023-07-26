@@ -85,4 +85,19 @@ class CohortsTest extends TestCase
         $this->assertInstanceOf(Cohort::class, $this->user->cohorts[0]);
         $this->assertEquals('test', $this->user->cohorts[0]->getName());
     }
+
+    public function test_returns_empty_array_when_no_cohorts()
+    {
+        $user = User::factory()->create(['cohorts' => null]);
+
+        $this->assertEmpty($user->cohorts);
+    }
+
+    public function test_returns_cohorts_names()
+    {
+        $user = User::factory()->create(['cohorts' => '["test1","test2"]']);
+
+        $this->assertCount(2, $user->getCohortsNames());
+        $this->assertEquals(["test1","test2"], $user->getCohortsNames());
+    }
 }

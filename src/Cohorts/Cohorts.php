@@ -96,12 +96,25 @@ trait Cohorts
 
         $this->initiatedCohorts = [];
 
-        foreach (json_decode($this->attributes['cohorts'], true) as $cohort) {
+        foreach ($this->getCohortsNames() as $cohort) {
             if ($cohortData = Config::get('cohorts.'.$cohort)) {
                 $this->initiatedCohorts[] = new Cohort($cohort, $cohortData['blessings']);
             }
         }
 
         return $this->initiatedCohorts;
+    }
+
+    /**
+     * Возвращает список названий когорт пользователя.
+     * @return array
+     */
+    public function getCohortsNames(): array
+    {
+        if ($this->attributes['cohorts'] === null) {
+            return [];
+        }
+
+        return json_decode($this->attributes['cohorts'], true);
     }
 }
