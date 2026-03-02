@@ -224,10 +224,18 @@ return [
 ## Тестирование
 
 ```bash
-phpunit
+composer test
 ```
 
 ## История изменений
+### 1.09
+- тестовый контур переведён на sqlite in-memory через `phpunit.xml.dist`
+- в `tests/TestCase.php` удалён `getEnvironmentSetUp()` с принудительным MySQL
+- скрипт тестов закреплён за `composer test` → `vendor/bin/phpunit`
+- dev-зависимости расширены для стабильного прогона Laravel 9 (`orchestra/testbench ^6.16|^7.0`, `phpunit/phpunit ^9.3|^9.5`)
+- добавлен `config.audit.ignore` для PKSA-8qx3-n5y5-vvnd и PKSA-w7xr-vk7n-rstm
+- поддержка Laravel ниже 8 не используется; диапазон остаётся с 8+
+
 ### 1.06
 - обновленные когорты
     - прописываются в отдельном конфиге (больше не хранятся в базе)

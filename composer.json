@@ -24,8 +24,8 @@
         "nikservik/commons": "^1.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.16",
-        "phpunit/phpunit": "^9.3"
+        "orchestra/testbench": "^6.16|^7.0",
+        "phpunit/phpunit": "^9.3|^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -39,10 +39,19 @@
             "Database\\Factories\\": "laravel/database/factories/"
         }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "audit": {
+            "ignore": [
+                "PKSA-8qx3-n5y5-vvnd",
+                "PKSA-w7xr-vk7n-rstm"
+            ]
+        }
     },
     "extra": {
         "branch-alias": {
