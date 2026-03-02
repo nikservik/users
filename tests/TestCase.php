@@ -34,11 +34,6 @@ class TestCase extends Orchestra
         $this->cohort = Cohort::make('test');
     }
 
-    public function getEnvironmentSetUp($app)
-    {
-        $app['config']->set('database.default', 'mysql');
-    }
-
     protected function defineDatabaseMigrations()
     {
         $this->loadLaravelMigrations();
