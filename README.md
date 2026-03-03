@@ -228,6 +228,10 @@ composer test
 ```
 
 ## История изменений
+### 1.10
+- dev-зависимости расширены для Laravel 10 (`orchestra/testbench ^8.0`) с сохранением текущих диапазонов
+- `config.audit.ignore` сохранён для PKSA-8qx3-n5y5-vvnd и PKSA-w7xr-vk7n-rstm
+
 ### 1.09
 - тестовый контур переведён на sqlite in-memory через `phpunit.xml.dist`
 - в `tests/TestCase.php` удалён `getEnvironmentSetUp()` с принудительным MySQL
